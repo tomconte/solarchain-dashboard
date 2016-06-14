@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="container-fluid">
+
+      <div class="row">
+        <div>
+          <h1 class="page-header">SolarChain Dashboard</h1>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="row placeholders">
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <h4>ETH</h4>
+                    <span class="text-muted" id="label1"></span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <h4>Block</h4>
+                    <span class="text-muted" id="label2"></span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <h4>Sols</h4>
+                    <span class="text-muted" id="label3"></span>
+                  </div>
+                  <div class="col-xs-6 col-sm-3 placeholder">
+                    <h4>Energy</h4>
+                    <span class="text-muted" id="label4">Something else</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <h2 class="sub-header">Operations</h2>
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <label for="sell">Sell energy:</label>
+                <input type="number" class="form-control" id="sell">
+              </div>
+              <button type="submit" class="btn btn-primary">Sell</button>
+            </form>
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                <label for="buy">Buy energy:</label>
+                <input type="number" class="form-control" id="buy">
+              </div>
+              <button type="submit" class="btn btn-primary">Buy</button>
+            </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <h2 class="sub-header">Transactions</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>block#</th>
+                  <th>from</th>
+                  <th>to</th>
+                  <th>input</th>
+                </tr>
+              </thead>
+              <tbody id="transactions">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/web3/dist/web3.min.js"></script>
+
+    <script src="abi.js"></script>
+    <script src="viz.js"></script>
+  </body>
+</html>
