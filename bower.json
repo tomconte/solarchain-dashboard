@@ -1,12 +1,12 @@
 {
-  "name": "vizdashboard",
+  "name": "solarchain-dashboard",
   "authors": [
     "Thomas Conte <thomas@conte.com>"
   ],
   "description": "SolarChain dashboard",
   "main": "index.html",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "http://hypernephelist.com/",
   "ignore": [
     "**/.*",
     "node_modules",
