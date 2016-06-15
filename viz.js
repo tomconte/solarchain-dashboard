@@ -28,12 +28,15 @@ filter.watch(function(error, result){
   for (var index = 0; index < block.transactions.length; index++) {
     var t = block.transactions[index];
 
+    // Decode from
+    var from = t.from==account ? "me" : t.from;
+
     if (t.input.indexOf("0x4326ee36") == 0) {
       // This is the sellEnergy() method
       var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
       console.dir(inputData);
       $('#transactions').append('<tr><td>' + t.blockNumber + 
-        '</td><td>' + t.from + 
+        '</td><td>' + from + 
         '</td><td>' + "ApolloTrade" + 
         '</td><td>sellEnergy(' + inputData[0].toString() + ')</td></tr>');
     } else if (t.input.indexOf("0xbc8a251f") == 0) {
@@ -41,12 +44,12 @@ filter.watch(function(error, result){
       var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
       console.dir(inputData);
       $('#transactions').append('<tr><td>' + t.blockNumber + 
-        '</td><td>' + t.from + 
+        '</td><td>' + from + 
         '</td><td>' + "ApolloTrade" + 
         '</td><td>buyEnergy(' + inputData[0].toString() + ')</td></tr>');
     } else {
       // Default log
-      $('#transactions').append('<tr><td>' + t.blockNumber + '</td><td>' + t.from + '</td><td>' + t.to + '</td><td>' + t.input + '</td></tr>')
+      $('#transactions').append('<tr><td>' + t.blockNumber + '</td><td>' + from + '</td><td>' + t.to + '</td><td>' + t.input + '</td></tr>')
     }
   }
 });
