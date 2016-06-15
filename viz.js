@@ -1,3 +1,6 @@
+// NOTE: Need to compile with browserify viz.js -o main.js
+var SolidityCoder = require("web3/lib/solidity/coder.js");
+
 //var account = '0x4cf24bf15bfead008b22ea33b7c99a82326031a7'; // Pi
 var account = '0x87b3f6def4d451c41be733b8924da66dea0caed4'; // Dev
 var contractAddress = '0x58b671784f4fa6b02e3dcac9f9dd215b66b5669b';
@@ -24,7 +27,27 @@ filter.watch(function(error, result){
 
   for (var index = 0; index < block.transactions.length; index++) {
     var t = block.transactions[index];
-    $('#transactions').append('<tr><td>' + t.blockNumber + '</td><td>' + t.from + '</td><td>' + t.to + '</td><td>' + t.input + '</td></tr>')
+
+    if (t.input.indexOf("0x4326ee36") == 0) {
+      // This is the sellEnergy() method
+      var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
+      console.dir(inputData);
+      $('#transactions').append('<tr><td>' + t.blockNumber + 
+        '</td><td>' + t.from + 
+        '</td><td>' + "ApolloTrade" + 
+        '</td><td>sellEnergy(' + inputData[0].toString() + ')</td></tr>');
+    } else if (t.input.indexOf("0xbc8a251f") == 0) {
+        // This is the buyEnergy() method
+      var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
+      console.dir(inputData);
+      $('#transactions').append('<tr><td>' + t.blockNumber + 
+        '</td><td>' + t.from + 
+        '</td><td>' + "ApolloTrade" + 
+        '</td><td>buyEnergy(' + inputData[0].toString() + ')</td></tr>');
+    } else {
+      // Default log
+      $('#transactions').append('<tr><td>' + t.blockNumber + '</td><td>' + t.from + '</td><td>' + t.to + '</td><td>' + t.input + '</td></tr>')
+    }
   }
 });
 

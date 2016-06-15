@@ -1,0 +1,22 @@
+{
+  "name": "solarchain-dashboard",
+  "version": "1.0.0",
+  "description": "SolarChain dashboard",
+  "main": "viz.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomconte/solarchain-dashboard.git"
+  },
+  "author": "Thomas Conte <thomas@conte.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomconte/solarchain-dashboard/issues"
+  },
+  "homepage": "https://github.com/tomconte/solarchain-dashboard#readme",
+  "dependencies": {
+    "web3": "^0.17.0-alpha"
+  }
+}
