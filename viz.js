@@ -9,6 +9,10 @@ var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 web3.eth.defaultAccount = account;
 
+// Assemble function hashes
+
+var functionHashes = getFunctionHashes(abiArray);
+
 // Get hold of contract instance
 
 var contract = web3.eth.contract(abiArray).at(contractAddress);
@@ -31,7 +35,10 @@ filter.watch(function(error, result){
     // Decode from
     var from = t.from==account ? "me" : t.from;
 
-    if (t.input.indexOf("0x4326ee36") == 0) {
+    // Decode function
+    var func = findFunctionByHash(functionHashes, t.input);
+
+    if (func == 'sellEnergy') {
       // This is the sellEnergy() method
       var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
       console.dir(inputData);
@@ -39,8 +46,8 @@ filter.watch(function(error, result){
         '</td><td>' + from + 
         '</td><td>' + "ApolloTrade" + 
         '</td><td>sellEnergy(' + inputData[0].toString() + ')</td></tr>');
-    } else if (t.input.indexOf("0xbc8a251f") == 0) {
-        // This is the buyEnergy() method
+    } else if (func == 'buyEnergy') {
+      // This is the buyEnergy() method
       var inputData = SolidityCoder.decodeParams(["uint256"], t.input.substring(10));
       console.dir(inputData);
       $('#transactions').append('<tr><td>' + t.blockNumber + 
@@ -77,3 +84,27 @@ setInterval(function() {
   $('#label4').text(energyBalance);
 
 }, 1000);
+
+// Get function hashes
+// TODO: also extract input parameter types for later decoding
+
+function getFunctionHashes(abi) {
+  var hashes = [];
+  for (var i=0; i<abi.length; i++) {
+    var item = abi[i];
+    if (item.type != "function") continue;
+    var signature = item.name + "(" + item.inputs.map(function(input) {return input.type;}).join(",") + ")";
+    var hash = web3.sha3(signature);
+    console.log(item.name + '=' + hash);
+    hashes.push({name: item.name, hash: hash});
+  }
+  return hashes;
+}
+
+function findFunctionByHash(hashes, functionHash) {
+  for (var i=0; i<hashes.length; i++) {
+    if (hashes[i].hash.substring(0, 10) == functionHash.substring(0, 10))
+      return hashes[i].name;
+  }
+  return null;
+}
